@@ -9,19 +9,19 @@ $aptupdate = true
 # System Level Services =======================================================
 
 package { "vim":
-  ensure => 'present'
+  ensure => present
 }
 
 package { 'screen':
-  ensure => present,
+  ensure => present
 }
 
 package { 'git':
-  ensure => present,
+  ensure => present
 }
 
 package { 'supervisor':
-  ensure => installed
+  ensure => present
 }
 
 # MySQL -----------------------------------------------------------------------
