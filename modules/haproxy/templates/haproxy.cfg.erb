@@ -1,0 +1,32 @@
+# this config needs haproxy-1.1.28 or haproxy-1.2.1
+
+global
+        log 127.0.0.1   local0
+        log 127.0.0.1   local1 notice
+        #log loghost    local0 info
+        maxconn 4096
+        #chroot /usr/share/haproxy
+        user haproxy
+        group haproxy
+        daemon
+        #debug
+        #quiet
+
+listen mysql 127.0.0.1:3306
+    timeout connect 10s
+    timeout server  1m
+    timeout client  1m
+    mode tcp
+<% @mysql.sort.each_with_index do |ip,index| %>
+    server mysql_<%= index+1 %> <%= ip %>:3306
+<% end %>
+
+listen rabbitmq 127.0.0.1:5672
+    timeout connect 10s
+    timeout server  11m
+    timeout client  11m
+    mode tcp
+<% @rabbitmq.sort.each_with_index do |ip,index| %>
+    server rabbitmq_<%= index+1 %> <%= ip %>:5672
+<% end %>
+
